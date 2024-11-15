@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản Lý Ô Tô</title>
+  <script>
+    async function createCar() {
+      const MaXe = document.getElementById('MaXe').value;
+      const Name = document.getElementById('Name').value;
+      const Price = document.getElementById('Price').value;
+      const Year = document.getElementById('Year').value;
+      const Brand = document.getElementById('Brand').value;
+
+      try {
+        const response = await fetch('/api/cars/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ MaXe, Name, Price, Year, Brand })
+        });
+
+        const data = await response.json();
+        document.getElementById('result').textContent = data.message;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+  </script>
+</head>
+<body>
+<h2>Nhập Thông Tin Ô Tô</h2>
+<form id="carForm">
+  <label>Mã Xe:</label><br>
+  <input type="text" id="MaXe"><br>
+  <label>Tên Xe:</label><br>
+  <input type="text" id="Name"><br>
+  <label>Giá:</label><br>
+  <input type="number" id="Price"><br>
+  <label>Năm Sản Xuất:</label><br>
+  <input type="number" id="Year"><br>
+  <label>Hãng:</label><br>
+  <input type="text" id="Brand"><br><br>
+  <button type="button" onclick="createCar()">Tạo Ô Tô</button>
+</form>
+<div id="result"></div>
+</body>
+</html>
